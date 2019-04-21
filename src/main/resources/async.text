@@ -42,6 +42,7 @@
     spring.mail.properties.mail.smtp.ssl.enable=true
 
 3.发送邮件
+    简单邮件发送:
     SimpleMailMessage message = new SimpleMailMessage();
     //设置邮件标题
     message.setSubject("xp发送的邮件标题-测试标题");
@@ -54,3 +55,23 @@
     //发送邮件
     javaMailSender.send(message);
 
+-----------------------------------------------------------------
+
+    带附件复杂邮件发送:
+    //创建复杂消息
+    MimeMessage message = javaMailSender.createMimeMessage();
+    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    helper.setSubject("Java测试发送邮件给才B！！！");
+
+    //设为true可以解析html标签
+    helper.setText("<font color=red><h2>才B的酒桶很垃圾！！！</h2></font>",true);
+    helper.setTo("947504876@qq.com");
+    helper.setFrom("897778411@qq.com");
+
+    //上传附件(图片,word等等)
+    helper.addAttachment("beer.jpg", new File("E:\\img\\beer.png"));
+    helper.addAttachment("bobby.jpg", new File("E:\\img\\bobby.jpg"));
+    helper.addAttachment("a.docx", new File("E:\\img\\a.docx"));
+
+    //发送
+    javaMailSender.send(message);
