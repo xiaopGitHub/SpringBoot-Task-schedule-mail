@@ -1,0 +1,56 @@
+
+############## springboot异步任务: @EnableAsync +  @Async ################
+
+1. 主启动类开启异步任务注解
+@EnableAsync //开启异步任务注解
+
+2. 标识异步任务调用的方法
+    @Async //该注解告诉spring这是一个异步任务,sring会单独开一个线程池进行调用
+    public void hello(){
+        try {
+            Thread.sleep(3000);
+            System.out.println("异步任务处理数据中..........");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+############## springboot定时任务: @EnableScheduling + @Scheduled(cron = "*/2 * * * * *") ################
+
+1. @EnableScheduling //开启定时任务
+
+2. 表示定时执行的任务
+    @Scheduled(cron = "*/2 * * * * *")
+    public void hello(){
+        System.out.println("hello..............");
+    }
+
+
+
+############## springboot邮件任务:################
+1. 引入依赖
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+
+2.配置邮箱信息
+    spring.mail.username=897778411@qq.com
+    spring.mail.password=授权码
+    spring.mail.host=smtp.qq.com
+    spring.mail.properties.mail.smtp.ssl.enable=true
+
+3.发送邮件
+    SimpleMailMessage message = new SimpleMailMessage();
+    //设置邮件标题
+    message.setSubject("xp发送的邮件标题-测试标题");
+    //设置邮件内容
+    message.setText("发送的邮件内容-66666666");
+    //邮件接收者的邮箱地址
+    message.setTo("xiaopeng1911outlook.com");
+    //邮件发送者邮箱
+    message.setFrom("897778411@qq.com");
+    //发送邮件
+    javaMailSender.send(message);
+
