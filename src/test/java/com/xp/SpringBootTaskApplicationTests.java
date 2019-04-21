@@ -7,7 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -17,6 +22,10 @@ public class SpringBootTaskApplicationTests {
     @Autowired
     JavaMailSenderImpl javaMailSender;
 
+    /**
+     * 简单邮件发送 SimpleMailMessage
+     *
+     * */
     @Test
     public void contextLoads() {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -32,4 +41,29 @@ public class SpringBootTaskApplicationTests {
         javaMailSender.send(message);
     }
 
+    /**
+     * 复杂邮件发送
+     *
+     * */
+    @Test
+    public void test01() throws MessagingException {
+        //创建复杂消息
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setSubject("Java测试发送邮件给才B！！！");
+        //设为true可以解析html标签
+        helper.setText("<font color=red><h2>才B的酒桶很垃圾！！！</h2></font>",true);
+//        helper.setTo("947504876@qq.com");
+        helper.setTo("947504876@qq.com");
+        helper.setFrom("897778411@qq.com");
+
+        //上传附件(图片,word等等)
+        helper.addAttachment("beer.jpg", new File("E:\\img\\beer.png"));
+        helper.addAttachment("bobby.jpg", new File("E:\\img\\bobby.jpg"));
+        helper.addAttachment("a.docx", new File("E:\\img\\a.docx"));
+
+        //发送
+        javaMailSender.send(message);
+    }
 }
