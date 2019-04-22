@@ -5,7 +5,7 @@
 @EnableAsync //开启异步任务注解
 
 2. 标识异步任务调用的方法
-    @Async //该注解告诉spring这是一个异步任务,sring会单独开一个线程池进行调用
+    @Async //该注解告诉spring这是一个异步任务,spring会单独开一个线程池进行调用
     public void hello(){
         try {
             Thread.sleep(3000);
@@ -49,7 +49,7 @@
     //设置邮件内容
     message.setText("发送的邮件内容-66666666");
     //邮件接收者的邮箱地址
-    message.setTo("xiaopeng1911outlook.com");
+    message.setTo("xiaopeng1911@outlook.com");
     //邮件发送者邮箱
     message.setFrom("897778411@qq.com");
     //发送邮件
